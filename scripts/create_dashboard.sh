@@ -1,0 +1,1 @@
+curl -X POST "kibana:5601/api/saved_objects/_import?overwrite=true" -H "kbn-xsrf: true" --form file=@es_dashboard.ndjson -H 'kbn-xsrf: true'

@@ -1,0 +1,123 @@
+[
+  {
+    "_id": "31fd2fd0-f36e-11ea-bce5-ab00d82ef8ed",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Cluster Crash Monitor",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":25,\"w\":24,\"h\":20,\"i\":\"1\"},\"id\":\"913cbb50-f36e-11ea-bce5-ab00d82ef8ed\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"version\":\"6.5.4\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":29,\"y\":0,\"w\":19,\"h\":8,\"i\":\"2\"},\"id\":\"c5e78ce0-f36e-11ea-bce5-ab00d82ef8ed\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"version\":\"6.5.4\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":24,\"y\":25,\"w\":24,\"h\":20,\"i\":\"3\"},\"id\":\"37f73a10-f36f-11ea-9841-8b82319ca37d\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"version\":\"6.5.4\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":45,\"w\":24,\"h\":15,\"i\":\"4\"},\"id\":\"9eb0fca0-f36f-11ea-bce5-ab00d82ef8ed\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"version\":\"6.5.4\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":0,\"w\":29,\"h\":8,\"i\":\"5\"},\"id\":\"fbf0e790-f36f-11ea-bce5-ab00d82ef8ed\",\"panelIndex\":\"5\",\"type\":\"visualization\",\"version\":\"6.5.4\"},{\"embeddableConfig\":{},\"gridData\":{\"x\":0,\"y\":8,\"w\":48,\"h\":17,\"i\":\"6\"},\"id\":\"f2bc12c0-f370-11ea-9841-8b82319ca37d\",\"panelIndex\":\"6\",\"type\":\"search\",\"version\":\"6.5.4\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"kuery\",\"query\":\"\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "22b2ff60-f354-11ea-bce5-ab00d82ef8ed",
+    "_type": "index-pattern",
+    "_source": {
+      "title": "k8s-crash-monitor*",
+      "timeFieldName": "created_at",
+      "fields": "[{\"name\":\"_id\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":false},{\"name\":\"_index\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":false},{\"name\":\"_score\",\"type\":\"number\",\"count\":0,\"scripted\":false,\"searchable\":false,\"aggregatable\":false,\"readFromDocValues\":false},{\"name\":\"_source\",\"type\":\"_source\",\"count\":0,\"scripted\":false,\"searchable\":false,\"aggregatable\":false,\"readFromDocValues\":false},{\"name\":\"_type\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":false},{\"name\":\"cluster_name\",\"type\":\"string\",\"count\":2,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"name\":\"container_name\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"name\":\"created_at\",\"type\":\"date\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"name\":\"logs\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":false,\"aggregatable\":false,\"readFromDocValues\":false},{\"name\":\"namespace\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"name\":\"pod_name\",\"type\":\"string\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"name\":\"restart_count\",\"type\":\"number\",\"count\":0,\"scripted\":false,\"searchable\":true,\"aggregatable\":true,\"readFromDocValues\":true},{\"name\":\"termination_state\",\"type\":\"string\",\"count\":2,\"scripted\":false,\"searchable\":true,\"aggregatable\":false,\"readFromDocValues\":false}]"
+    }
+  },
+  {
+    "_id": "f2bc12c0-f370-11ea-9841-8b82319ca37d",
+    "_type": "search",
+    "_source": {
+      "title": "Pod Crash Log Table",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "namespace",
+        "container_name",
+        "pod_name",
+        "restart_count",
+        "logs",
+        "termination_state",
+        "cluster_name"
+      ],
+      "sort": [
+        "created_at",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"highlightAll\":true,\"version\":true,\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "fbf0e790-f36f-11ea-bce5-ab00d82ef8ed",
+    "_type": "visualization",
+    "_source": {
+      "title": "Pod Crash Controls",
+      "visState": "{\"title\":\"Pod Crash Controls\",\"type\":\"input_control_vis\",\"params\":{\"controls\":[{\"id\":\"1599747171165\",\"indexPattern\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"fieldName\":\"namespace\",\"parent\":\"\",\"label\":\"Namespace\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"dynamicOptions\":true,\"size\":5,\"order\":\"desc\"}},{\"id\":\"1599747194622\",\"indexPattern\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"fieldName\":\"container_name\",\"parent\":\"\",\"label\":\"Container Name\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"dynamicOptions\":true,\"size\":5,\"order\":\"desc\"}},{\"id\":\"1600338017680\",\"indexPattern\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"fieldName\":\"cluster_name\",\"parent\":\"\",\"label\":\"Cluster Name\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"dynamicOptions\":true,\"size\":5,\"order\":\"desc\"}},{\"id\":\"1600338039945\",\"indexPattern\":\"\",\"fieldName\":\"\",\"parent\":\"\",\"label\":\"\",\"type\":\"list\",\"options\":{\"type\":\"terms\",\"multiselect\":true,\"dynamicOptions\":true,\"size\":5,\"order\":\"desc\"}}],\"updateFiltersOnChange\":false,\"useTimeFilter\":false,\"pinFilters\":false},\"aggs\":[]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[{\"meta\":{\"index\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"controlledBy\":\"1600338017680\",\"type\":\"phrase\",\"key\":\"cluster_name\",\"value\":\"production-cluster\",\"params\":{\"query\":\"production-cluster\",\"type\":\"phrase\"},\"disabled\":false,\"negate\":false,\"alias\":null},\"query\":{\"match\":{\"cluster_name\":{\"query\":\"production-cluster\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}]}"
+      }
+    }
+  },
+  {
+    "_id": "9eb0fca0-f36f-11ea-bce5-ab00d82ef8ed",
+    "_type": "visualization",
+    "_source": {
+      "title": "Pod Crash Namespace-wise Time Graph",
+      "visState": "{\"title\":\"Pod Crash Namespace-wise Time Graph\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Count\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true,\"lineWidth\":2.5,\"interpolate\":\"linear\"}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"created_at\",\"timeRange\":{\"from\":\"now-4h\",\"to\":\"now\",\"mode\":\"quick\"},\"useNormalizedEsInterval\":true,\"interval\":\"auto\",\"time_zone\":\"Asia/Kolkata\",\"drop_partials\":false,\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"namespace\",\"size\":100,\"order\":\"asc\",\"orderBy\":\"1\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "37f73a10-f36f-11ea-9841-8b82319ca37d",
+    "_type": "visualization",
+    "_source": {
+      "title": "Pod Crash Namespace Distribution",
+      "visState": "{\"title\":\"Pod Crash Namespace Distribution\",\"type\":\"pie\",\"params\":{\"type\":\"pie\",\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"labels\":{\"show\":false,\"values\":true,\"last_level\":true,\"truncate\":100}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"namespace\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"1\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\"}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "c5e78ce0-f36e-11ea-bce5-ab00d82ef8ed",
+    "_type": "visualization",
+    "_source": {
+      "title": "Total Pods Crashed",
+      "visState": "{\"title\":\"Total Pods Crashed\",\"type\":\"metric\",\"params\":{\"addTooltip\":true,\"addLegend\":false,\"type\":\"metric\",\"metric\":{\"percentageMode\":false,\"useRanges\":false,\"colorSchema\":\"Green to Red\",\"metricColorMode\":\"None\",\"colorsRange\":[{\"from\":0,\"to\":10000}],\"labels\":{\"show\":true},\"invertColors\":false,\"style\":{\"bgFill\":\"#000\",\"bgColor\":false,\"labelColor\":false,\"subText\":\"\",\"fontSize\":60}}},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "913cbb50-f36e-11ea-bce5-ab00d82ef8ed",
+    "_type": "visualization",
+    "_source": {
+      "title": "Pod Crash Time Graph",
+      "visState": "{\"title\":\"Pod Crash Time Graph\",\"type\":\"line\",\"params\":{\"type\":\"line\",\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Count\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"area\",\"mode\":\"normal\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"created_at\",\"timeRange\":{\"from\":\"now-4h\",\"to\":\"now\",\"mode\":\"quick\"},\"useNormalizedEsInterval\":true,\"interval\":\"auto\",\"time_zone\":\"Asia/Kolkata\",\"drop_partials\":false,\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}}]}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"22b2ff60-f354-11ea-bce5-ab00d82ef8ed\",\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+      }
+    }
+  }
+]

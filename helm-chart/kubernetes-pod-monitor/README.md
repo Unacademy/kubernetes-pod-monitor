@@ -5,7 +5,9 @@ To install via helm 3, run the following commands:
 
 ```
 helm repo add kubernetes-pod-monitor https://unacademy.github.io/kubernetes-pod-monitor/
-helm upgrade -i --create-namespace kubernetes-pod-monitor kubernetes-pod-monitor/kubernetes-pod-monitor --namespace kubernetes-pod-monitor
+helm upgrade --install --create-namespace \
+    kubernetes-pod-monitor kubernetes-pod-monitor/kubernetes-pod-monitor \
+    --namespace kubernetes-pod-monitor
 ```
 
 <br/><br/>
