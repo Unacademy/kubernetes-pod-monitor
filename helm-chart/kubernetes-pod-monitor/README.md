@@ -4,8 +4,8 @@ Helm chart for the Kubernetes Pod Monitor project, which is created to monitor K
 To install via helm 3, run the following commands:
 
 ```
-helm repo add kubenetes-pod-monitor https://unacademy.github.io/kubernetes-pod-monitor/
-helm upgrade -i --create-namespace kubenetes-pod-monitor kubenetes-pod-monitor/kubenetes-pod-monitor --namespace kubenetes-pod-monitor
+helm repo add kubernetes-pod-monitor https://unacademy.github.io/kubernetes-pod-monitor/
+helm upgrade -i --create-namespace kubernetes-pod-monitor kubernetes-pod-monitor/kubernetes-pod-monitor --namespace kubernetes-pod-monitor
 ```
 
 <br/><br/>

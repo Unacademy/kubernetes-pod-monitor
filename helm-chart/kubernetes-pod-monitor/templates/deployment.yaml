@@ -58,37 +58,37 @@ spec:
             timeoutSeconds: 30
           env:
           - name: CLUSTER_NAME
-            value: {{ .Values.config.clusterName }}
+            value: {{ .Values.config.clusterName | quote }}
           - name: DEPLOY_ENV
-            value: {{ .Values.config.deployEnv }}
+            value: {{ .Values.config.deployEnv | quote }}
           - name: AWS_REGION
-            value: {{ .Values.config.aws.region }}
+            value: {{ .Values.config.aws.region | quote }}
           - name: ELASTICSEARCH_URL
-            value: {{ .Values.config.elasticsearch.url }}
+            value: {{ .Values.config.elasticsearch.url | quote }}
           - name: ELASTICSEARCH_DASHBOARD
-            value: {{ .Values.config.elasticsearch.dashboard }}
+            value: {{ .Values.config.elasticsearch.dashboard | quote }}
           - name: ELASTICSEARCH_PORT
-            value: {{ .Values.config.elasticsearch.port }}
+            value: {{ .Values.config.elasticsearch.port | quote  }}
           - name: ELASTICSEARCH_SCHEME
-            value: {{ .Values.config.elasticsearch.scheme }}
+            value: {{ .Values.config.elasticsearch.scheme | quote }}
           - name: ELASTICSEARCH_V7
-            value: {{ .Values.config.elasticsearch.v7 }}
+            value: {{ .Values.config.elasticsearch.v7 | quote }}
           - name: SLACK_NOTIFY
-            value: {{ .Values.config.slack.notify }}
+            value: {{ .Values.config.slack.notify | quote }}
           - name: SLACK_CHANNEL
-            value: {{ .Values.config.slack.channel }}
+            value: {{ .Values.config.slack.channel | quote }}
           - name: SLACK_TOKEN
-            value: {{ .Values.config.slack.token }}
+            value: {{ .Values.config.slack.token | quote }}
           - name: SQL_HOST
-            value: {{ .Values.config.sql.host }}
+            value: {{ .Values.config.sql.host | quote }}
           - name: SQL_PORT
-            value: {{ .Values.config.sql.port }}
+            value: {{ .Values.config.sql.port | quote }}
           - name: SQL_USERNAME
-            value: {{ .Values.config.sql.username }}
+            value: {{ .Values.config.sql.username | quote }}
           - name: SQL_PASSWORD
-            value: {{ .Values.config.sql.password }}
+            value: {{ .Values.config.sql.password | quote }}
           - name: SQL_DBNAME
-            value: {{ .Values.config.sql.dbname }}
+            value: {{ .Values.config.sql.dbname | quote }}
             {{- if .Values.env }}
             {{- toYaml .Values.env | nindent 12 }}
             {{- end }}

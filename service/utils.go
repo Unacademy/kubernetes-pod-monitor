@@ -18,8 +18,6 @@ import (
 
 const createdFormat = "2006-01-02 15:04:05" //"Jan 2, 2006 at 3:04pm (MST)"
 
-var defaultSlackChannel = viper.GetString("slack.channel")
-
 // getCurrentTimeInSeconds returns current time in seconds.
 func getCurrentTimeInSeconds() int64 {
 	return time.Now().UnixNano() / int64(time.Second)
@@ -75,7 +73,7 @@ func sendESLogs(containerInfo *ContainerInfo, restartCount int32, logs *string, 
 }
 
 func notifyOnSlack(containerInfo *ContainerInfo, lastTerminationState *string, percent int) {
-	token := viper.GetString("slack.channel")
+	token := viper.GetString("slack.token")
 	if shouldNotify(containerInfo.ClusterName, containerInfo.Namespace, containerInfo.ContainerName) == false || viper.GetBool("slack.notify") == false {
 		log.Info("not notifying...")
 		return
@@ -84,6 +82,7 @@ func notifyOnSlack(containerInfo *ContainerInfo, lastTerminationState *string, p
 	api := slack.New(token)
 
 	log.Info("notifying...")
+	log.Infof("Sending to %s for %s namespace in %s cluster", channelName, containerInfo.ClusterName, containerInfo.Namespace)
 	link := viper.GetString("elasticsearch.dashboard")
 
 	msg := fmt.Sprintf("*Cluster Name*:- %s\n*Namespace*:- %s\n*Container Name*:- %s\n *Reason*:- %s\n `Kibana dashboard`:- <%s|Dashboard>",
@@ -98,6 +97,7 @@ func notifyOnSlack(containerInfo *ContainerInfo, lastTerminationState *string, p
 func getSlackChannel(clusterName string, namespace string) string {
 	sqlClient := sessions.GetSqlClient()
 	var slackChannel string
+	var defaultSlackChannel = viper.GetString("slack.channel")
 
 	rows, err := sqlClient.Raw(`select slack_channel FROM k8s_pod_crash_notify WHERE clustername=? AND namespace=?`,
 		clusterName, namespace).Rows()

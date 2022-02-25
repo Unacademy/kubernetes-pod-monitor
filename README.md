@@ -43,6 +43,6 @@ MySQL.
 ## Contributors
 <table>
   <tr>
-    <td align="center"><a href="https://www.linkedin.com/in/shivam-gupta-dtu/"><img src="https://avatars1.githubusercontent.com/u/22556869?s=460&u=bd28a7d3ffa18bf409071ae6c9eae80692d0143e&v=4" width="100px;" alt=""/><br /><sub><b>Shivam Gupta</b></sub></a><br /></td>
+    <td align="center"><a href="https://www.linkedin.com/in/shivam-gupta-dtu/"><img src="https://avatars1.githubusercontent.com/u/22556869?s=460&u=bd28a7d3ffa18bf409071ae6c9eae80692d0143e&v=4" width="100px;" alt="https://github.com/Shivam9268"/><br /><sub><b>Shivam Gupta</b></sub></a><br /></td>
     </tr>
 </table>
