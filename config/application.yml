@@ -1,0 +1,44 @@
+DEPLOY_ENV: local
+
+CLUSTER_NAME: local-cluster
+
+server:
+  port: 80
+
+log:
+  level: INFO
+
+aws:
+  region: <aws-region>
+
+elasticsearch:
+  url: https://es-url
+  dashboard: https://dashboard-link
+  scheme: https
+  port: 443
+  index: k8s-crash-monitor-
+  buffer_size: 100
+  batch_size: 1
+  flush_seconds: 30
+  doc_type: _doc
+  v7: true
+
+check_interval: 30
+max_retries: 10
+max_parallelism: 30
+
+sql:
+  connection_lifetime: 300
+  host: 127.0.0.1
+  port: 3306
+  username: admin
+  password: admin
+  dbname: kubernetes_pod_monitor
+  table_name: k8s_crash_monitor
+
+max_crashlog_length: 1000000
+
+slack:
+  token: XXXXXXX
+  channel: pod-crash-alerts
+  notify: false

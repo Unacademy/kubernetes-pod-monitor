@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kubernetes-pod-monitor.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kubernetes-pod-monitor.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "kubernetes-pod-monitor.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "kubernetes-pod-monitor.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "kubernetes-pod-monitor.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 180
+            successThreshold: 1
+            timeoutSeconds: 30
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 180
+            successThreshold: 1
+            timeoutSeconds: 30
+          env:
+          - name: CLUSTER_NAME
+            value: {{ .Values.config.clusterName }}
+          - name: DEPLOY_ENV
+            value: {{ .Values.config.deployEnv }}
+          - name: AWS_REGION
+            value: {{ .Values.config.aws.region }}
+          - name: ELASTICSEARCH_URL
+            value: {{ .Values.config.elasticsearch.url }}
+          - name: ELASTICSEARCH_DASHBOARD
+            value: {{ .Values.config.elasticsearch.dashboard }}
+          - name: ELASTICSEARCH_PORT
+            value: {{ .Values.config.elasticsearch.port }}
+          - name: ELASTICSEARCH_SCHEME
+            value: {{ .Values.config.elasticsearch.scheme }}
+          - name: ELASTICSEARCH_V7
+            value: {{ .Values.config.elasticsearch.v7 }}
+          - name: SLACK_NOTIFY
+            value: {{ .Values.config.slack.notify }}
+          - name: SLACK_CHANNEL
+            value: {{ .Values.config.slack.channel }}
+          - name: SLACK_TOKEN
+            value: {{ .Values.config.slack.token }}
+          - name: SQL_HOST
+            value: {{ .Values.config.sql.host }}
+          - name: SQL_PORT
+            value: {{ .Values.config.sql.port }}
+          - name: SQL_USERNAME
+            value: {{ .Values.config.sql.username }}
+          - name: SQL_PASSWORD
+            value: {{ .Values.config.sql.password }}
+          - name: SQL_DBNAME
+            value: {{ .Values.config.sql.dbname }}
+            {{- if .Values.env }}
+            {{- toYaml .Values.env | nindent 12 }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
