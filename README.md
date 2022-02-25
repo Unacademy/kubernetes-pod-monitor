@@ -32,7 +32,6 @@ You can deploy Kubernetes Pod Monitor on any Kubernetes 1.13+ cluster in a matte
   - `restart_count`: Number of times the pod restarted
   - `termination_state`: State of the container with reason, message, started at timestamp and finished at timestamp
 
-
 ## Software stack
 
 Golang application. 
