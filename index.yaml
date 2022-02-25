@@ -3,12 +3,12 @@ entries:
   kubernetes-pod-monitor:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-02-22T18:23:41.006457+05:30"
+    created: "2022-02-25T21:15:25.020196+05:30"
     description: A Helm chart for Kubernetes
-    digest: 3e8242147296d55a0721e72980993e8de963295f180ba45ddc43fc806a0ceafc
+    digest: 2540d151273e4a2d4f6f677bdf213cd687085da46773e9cb48e1e3f59c4faf47
     name: kubernetes-pod-monitor
     type: application
     urls:
     - https://unacademy.github.io/kubernetes-pod-monitor/kubernetes-pod-monitor-0.1.0.tgz
     version: 0.1.0
-generated: "2022-02-22T18:23:41.005143+05:30"
+generated: "2022-02-25T21:15:25.019486+05:30"
