@@ -1,0 +1,100 @@
+version: "3.9"
+services:
+  kubernetes-pod-monitor:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    links:
+      - mysql
+      - elasticsearch
+      - kibana
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch
+      - ELASTICSEARCH_SCHEME=http
+      - ELASTICSEARCH_PORT=9200
+      - ELASTICSEARCH_V7=true
+      - MAX_CRASHLOG_LENGTH=1000
+      - SQL_HOST=mysql
+      - ELASTICSEARCH_DASHBOARD=http://127.0.0.1:5601/app/dashboards#/view/31fd2fd0-f36e-11ea-bce5-ab00d82ef8ed
+      - CLUSTER_NAME=local-cluster
+      - SLACK_NOTIFY=false
+      - SLACK_CHANNEL=""
+      - SLACK_TOKEN=""
+      # - AWS_ACCESS_KEY_ID=
+      # - AWS_SECRET_ACCESS_KEY=
+  mysql:
+    image: mysql:8.0.28-oracle
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kubernetes_pod_monitor
+    volumes:
+      - "./scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      interval: 10s
+      timeout: 10s
+      retries: 30
+  elasticsearch:
+    image: elasticsearch:7.17.0
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -v http://127.0.0.1:9200",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+  kibana:
+    image: kibana:7.17.0
+    restart: always
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -v http://127.0.0.1:5601",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+  dashboard_create_utility:
+    image: curlimages/curl:7.81.0
+    restart: on-failure
+    depends_on:
+      kibana:
+        condition: service_healthy
+    links:
+      - kibana
+    command: sh /create_dashboard.sh
+    volumes:
+      - ./scripts/create_dashboard.sh:/create_dashboard.sh 
+      - ./scripts/es_dashboard.ndjson:/es_dashboard.ndjson

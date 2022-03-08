@@ -3,7 +3,7 @@ DEPLOY_ENV: local
 CLUSTER_NAME: local-cluster
 
 server:
-  port: 80
+  port: 8080
 
 log:
   level: INFO

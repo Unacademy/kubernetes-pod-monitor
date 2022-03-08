@@ -1,27 +1,51 @@
 ## Kubernetes Pod Monitor
 
-Kubernetes Pod Monitor gives teams visibility into current and historical pod crashes. This provides immediate alerting that reduces the mean time to detect (MTTD). It also captures the error logs and streams them to Elasticsearch. It is integrated with Slack to notify of failures and send messages with details like the last container state, reason for pod failure along with a direct link to the crash logs stored in Elasticsearch.
+Kubernetes Pod Monitor actively tracks your K8S pods and alerts container restarts alongwith its crash logs thereby decreasing mean time to detect (MTTD). The features include:
 
-![Sample Elasticsearch Dashboard](getting-started/dashboard.png)
+- Alerting using slack integration
+- Capturing critical crash logs and storing in Elasticsearch
+- Historical pod crashes
+- Storing container state that gives transparency on pod lifetime and status before termination
+- Kibana Visualization for filtering through crashes
+- Ability to configure slack channel based on namespace
+- Ability to ignore certain namespaces
+
+
+![Elasticsearch Dashboard](getting-started/dashboard.jpeg)
 
 ## Requirements
 
-- Kubernetes version 1.13 or higher
-- MySQL version 5.7 or higher
-- Elasticsearch version 6.5 or higher
-- [Slack access tokens](https://api.slack.com/authentication/token-types) (optional)
+<a name="requirements"></a>
+The following table lists the minimum requirements for running Kubernetes Pod Monitor.
+
+Tool | Minimum version | Minimum configuration
+--------- | ----------- | -------
+Kubernetes | 1.13 | 100 MB RAM
+MySQL | 5.7 | `-`
+Elasticsearch | 6.5 | 4 GB RAM
+
+To send alerts via Slack integration, access tokens can be generated here: https://api.slack.com/authentication/token-types
 
 ## Getting Started
 
 You can deploy Kubernetes Pod Monitor on any Kubernetes 1.13+ cluster in a matter of minutes, if not seconds.
-- [Apply MySQL migrations](getting-started/sql.md)
-- [Install using the Helm chart](helm-chart/kubernetes-pod-monitor/README.md)
+- Using Helm chart (recommended):
+  - [Apply MySQL migrations](getting-started/sql.md)
+  - [Install using the Helm chart](helm-chart/kubernetes-pod-monitor/README.md)
+  - Import [Kibana dashboard](getting-started/es_saved_objects.json) into Elasticsearch by following https://www.elastic.co/guide/en/kibana/current/managing-saved-objects.html
+
+- Using docker compose:
+  - Add kuberentes configuration file to `config` directory and update `CLUSTER_NAME` env variable in docker-compose
+  - Run `docker-compose up`
 
 ## Usage
 
-- To send slack notifications to a non-default slack channel based on namespace, add a row in the `k8s_pod_crash_notify` table with `clustername`, `namespace` and `slack_channel`.
-- To ignore slack notifications for a specific namespace in a cluster, add a row in the `k8s_crash_ignore_notify` table with `clustername`, `namespace` and `containername`.
-- Use `k8s_pod_crash` table to create dashboards.
+- To configure slack notifications, use the [notification management utility](scripts/notification_management_utility.py)
+  - Requirements for running the utility:
+    - Python v3.6 or higher
+    - PyMSQL package to manage MySQL tables: https://pypi.org/project/PyMySQL/
+    - Tabulate package to render tables: https://pypi.org/project/tabulate/
+  - Run the utility using `python3 scripts/notification_management_utility.py` and follow the 
 - An indexed document in Elasticsearch consists of following fields:
   - `namespace`: Namespace of the crashed pod
   - `pod_name`: Name of the pod that crashed
