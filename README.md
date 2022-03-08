@@ -45,7 +45,7 @@ You can deploy Kubernetes Pod Monitor on any Kubernetes 1.13+ cluster in a matte
     - Python v3.6 or higher
     - PyMSQL package to manage MySQL tables: https://pypi.org/project/PyMySQL/
     - Tabulate package to render tables: https://pypi.org/project/tabulate/
-  - Run the utility using `python3 scripts/notification_management_utility.py` and follow the 
+  - Run the utility using `python3 scripts/notification_management_utility.py` and follow the steps
 - An indexed document in Elasticsearch consists of following fields:
   - `namespace`: Namespace of the crashed pod
   - `pod_name`: Name of the pod that crashed
