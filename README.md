@@ -154,6 +154,10 @@ An indexed document in Elasticsearch consists of following fields:
 }
 ```
 
+## Demo
+
+https://user-images.githubusercontent.com/22556869/160109898-97a7fd96-33cc-4e1c-844a-226a030b9e7e.mov
+
 
 ## Software stack
 
