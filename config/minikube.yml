@@ -1,0 +1,27 @@
+apiVersion: v1
+preferences: {}
+kind: Config
+
+clusters:
+  - cluster:
+      # use 127.0.0.1 instead of "kubernetes" hostname when running on local
+      server: https://kubernetes:53856
+      # Add base64 encoded ca.crt (~/.minikube/ca.crt)
+      certificate-authority-data: 
+    name: minikube
+
+contexts:
+  - context:
+      cluster: minikube
+      user: minikube
+    name: minikube
+
+current-context: minikube
+
+users:
+- name: minikube
+  user:
+    # Add base64 encoded client.crt (~/.minikube/profiles/minikube/client.crt)
+    client-certificate-data: 
+    # Add base64 encoded client.key (~/.minikube/profiles/minikube/client.key)
+    client-key-data: 

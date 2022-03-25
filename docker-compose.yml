@@ -5,6 +5,9 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    # Add this to access host machine's network from docker container
+    extra_hosts:
+      - "kubernetes:host-gateway"
     depends_on:
       mysql:
         condition: service_healthy
@@ -21,10 +24,10 @@ services:
       - ELASTICSEARCH_SCHEME=http
       - ELASTICSEARCH_PORT=9200
       - ELASTICSEARCH_V7=true
-      - MAX_CRASHLOG_LENGTH=1000
+      - MAX_CRASHLOG_LENGTH=5000
       - SQL_HOST=mysql
       - ELASTICSEARCH_DASHBOARD=http://127.0.0.1:5601/app/dashboards#/view/31fd2fd0-f36e-11ea-bce5-ab00d82ef8ed
-      - CLUSTER_NAME=local-cluster
+      - CLUSTER_NAME=minikube
       - SLACK_NOTIFY=false
       - SLACK_CHANNEL=""
       - SLACK_TOKEN=""

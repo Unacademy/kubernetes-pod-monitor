@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo-pod
+  namespace: demo
+spec:
+  restartPolicy: Always
+  containers:
+  - name: demo-container
+    image: alpine
+    command: ["sh", "-c", "echo 'Starting application and sleeping for 15 seconds' && sleep 15 && echo 'Some sample crash logs for demo:\nTraceback (most recent call last):\n...\nRecursionError: maximum recursion depth exceeded in comparison\n...\nFatal Python error: Cannot recover from stack overflow.'"]

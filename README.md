@@ -35,11 +35,11 @@ You can deploy Kubernetes Pod Monitor on any Kubernetes 1.13+ cluster in a matte
   - Import [Kibana dashboard](getting-started/es_saved_objects.json) into Elasticsearch by following https://www.elastic.co/guide/en/kibana/current/managing-saved-objects.html
 
 ### Using docker compose
-  - Add kuberentes configuration file to `config` directory and update `CLUSTER_NAME` env variable in docker-compose
+  - Add kuberentes configuration (kubeconfig) file to `config` directory and update `CLUSTER_NAME` env variable in docker-compose
   - Start docker compose using:
   
     ```sh
-    docker-compose up
+    docker-compose up --build
     ```
 
 

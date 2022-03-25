@@ -23,7 +23,7 @@ elasticsearch:
   doc_type: _doc
   v7: true
 
-check_interval: 30
+check_interval: 15
 max_retries: 10
 max_parallelism: 30
 

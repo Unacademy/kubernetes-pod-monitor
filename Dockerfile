@@ -17,8 +17,8 @@ RUN pip install awscli==1.22.55
 RUN adduser --disabled-password  --gecos "" shivam
 USER shivam
 
-COPY --from=build /kubernetes-pod-monitor/kubernetes-pod-monitor .
-COPY --from=build /kubernetes-pod-monitor/config ./config
+COPY --chown=shivam --from=build /kubernetes-pod-monitor/kubernetes-pod-monitor .
+COPY --chown=shivam --from=build /kubernetes-pod-monitor/config ./config
 
 EXPOSE 80
 
