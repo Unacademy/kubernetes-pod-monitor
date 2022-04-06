@@ -1,11 +1,11 @@
 ## Kubernetes Pod Monitor
 
-Kubernetes Pod Monitor actively tracks your K8S pods and alerts container restarts alongwith its crash logs thereby decreasing mean time to detect (MTTD). The features include:
+Kubernetes Pod Monitor actively tracks your K8S pods and alerts container restarts along with its crash logs thereby decreasing the mean time to detect (MTTD). The features include:
 
 - Alerting using slack integration
-- Capturing critical crash logs and storing in Elasticsearch
+- Capturing critical crash logs and storing them in Elasticsearch
 - Historical pod crashes
-- Storing container state that gives transparency on pod lifetime and status before termination
+- Storing container state that gives transparency on pod lifetime and status before the termination
 - Kibana Visualization for filtering through crashes
 - Ability to configure slack channel based on namespace
 - Ability to ignore certain namespaces
@@ -116,10 +116,10 @@ python3 scripts/notification_management_utility.py
 ```
 
 ## Sample Elasticsearch document
-An indexed document in Elasticsearch consists of following fields:
+An indexed document in Elasticsearch consists of the following fields:
   - `namespace`: Namespace of the crashed pod
   - `pod_name`: Name of the pod that crashed
-  - `container_name`: Container name which restarted. Helpful incase of multiple containers in a pod
+  - `container_name`: Container name which restarted. Helpful in case of multiple containers in a pod
   - `created_at`: Timestamp in milliseconds
   - `cluster_name`: Name of the cluster
   - `logs`: Logs of the container before restarting
