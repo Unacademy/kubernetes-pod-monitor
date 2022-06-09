@@ -5,7 +5,7 @@ WORKDIR /kubernetes-pod-monitor
 
 COPY . .
 
-RUN go build -o kubernetes-pod-monitor
+RUN go build -o kubernetes-pod-monitor cmd/main.go
 
 FROM golang:1.16.14-alpine
 

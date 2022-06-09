@@ -16,8 +16,6 @@ import (
 	"github.com/unacademy/kubernetes-pod-monitor/sessions"
 )
 
-const createdFormat = "2006-01-02 15:04:05" //"Jan 2, 2006 at 3:04pm (MST)"
-
 // getCurrentTimeInSeconds returns current time in seconds.
 func getCurrentTimeInSeconds() int64 {
 	return time.Now().UnixNano() / int64(time.Second)
@@ -78,16 +76,16 @@ func notifyOnSlack(containerInfo *ContainerInfo, lastTerminationState *string, p
 		log.Info("not notifying...")
 		return
 	}
+
 	channelName := getSlackChannel(containerInfo.ClusterName, containerInfo.Namespace)
 	api := slack.New(token)
 
 	log.Info("notifying...")
 	log.Infof("Sending to %s for %s namespace in %s cluster", channelName, containerInfo.ClusterName, containerInfo.Namespace)
-	link := viper.GetString("elasticsearch.dashboard")
 
+	link := viper.GetString("elasticsearch.dashboard")
 	msg := fmt.Sprintf("*Cluster Name*:- %s\n*Namespace*:- %s\n*Container Name*:- %s\n *Reason*:- %s\n `Kibana dashboard`:- <%s|Dashboard>",
 		containerInfo.ClusterName, containerInfo.Namespace, containerInfo.ContainerName, containerInfo.Reason, link)
-
 	err := api.ChatPostMessage(channelName, msg, nil)
 	if err != nil {
 		log.Error(err)
@@ -95,10 +93,9 @@ func notifyOnSlack(containerInfo *ContainerInfo, lastTerminationState *string, p
 }
 
 func getSlackChannel(clusterName string, namespace string) string {
-	sqlClient := sessions.GetSqlClient()
 	var slackChannel string
 	var defaultSlackChannel = viper.GetString("slack.channel")
-
+	sqlClient := sessions.GetSqlClient()
 	rows, err := sqlClient.Raw(`select slack_channel FROM k8s_pod_crash_notify WHERE clustername=? AND namespace=?`,
 		clusterName, namespace).Rows()
 	if err != nil {
@@ -119,9 +116,8 @@ func getSlackChannel(clusterName string, namespace string) string {
 }
 
 func shouldNotify(clusterName string, namespace string, containername string) bool {
-	sqlClient := sessions.GetSqlClient()
 	var exists string
-
+	sqlClient := sessions.GetSqlClient()
 	rows, err := sqlClient.Raw(`select count(*) FROM k8s_crash_ignore_notify WHERE clustername=? AND namespace=? AND containername=?`,
 		clusterName, namespace, containername).Rows()
 	if err != nil {
@@ -145,7 +141,7 @@ func shouldNotify(clusterName string, namespace string, containername string) bo
 
 func persistPodCrash(containerInfo *ContainerInfo, restartCount int32) {
 	sqlClient := sessions.GetSqlClient()
-	currTime := time.Unix(getCurrentTimeInSeconds(), 0).Format(createdFormat)
+	currTime := time.Unix(getCurrentTimeInSeconds(), 0).Format("2006-01-02 15:04:05")
 	err := sqlClient.Exec(`INSERT INTO k8s_pod_crash (clustername, namespace, containername, restartcount, date) VALUES(?,?,?,?,?)`,
 		containerInfo.ClusterName, containerInfo.Namespace, containerInfo.ContainerName, restartCount, currTime).Error
 

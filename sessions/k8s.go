@@ -16,6 +16,7 @@ var (
 
 func newClientset() *kubernetes.Clientset {
 	env := viper.GetString("DEPLOY_ENV")
+
 	kubeconfig := ""
 	if env == "local" {
 		kubeconfig = filepath.Join(

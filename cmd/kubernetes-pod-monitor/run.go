@@ -1,4 +1,4 @@
-package main
+package kubernetes_pod_monitor
 
 import (
 	"fmt"
@@ -46,7 +46,7 @@ func setup() {
 	setupApp()
 }
 
-func CleanupOnSignal(cleanup func()) {
+func cleanupOnSignal(cleanup func()) {
 	go func() {
 		sig := <-gracefulStop
 		log.Info(fmt.Sprintf("caught sig: %+v. waiting for goroutines to finish", sig))
@@ -60,7 +60,7 @@ func setupApp() {
 	service.Initialize()
 	http.Initialize()
 	sessions.HealthOrPanic()
-	CleanupOnSignal(cleanup)
+	cleanupOnSignal(cleanup)
 }
 
 func cleanup() {
@@ -69,13 +69,9 @@ func cleanup() {
 	done <- true
 }
 
-func run() {
+func Run() {
+	setup()
 	go http.Run()
 	go service.Run()
 	<-done
-}
-
-func main() {
-	setup()
-	run()
 }

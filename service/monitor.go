@@ -70,15 +70,13 @@ func checkPod(pod *corev1.Pod) {
 			lastTerminationState = lastState.String()
 		}
 
-		podLogOpts := corev1.PodLogOptions{Container: container.Name, Previous: true}
-		req := clientset.CoreV1().Pods(namespace).GetLogs(podName, &podLogOpts)
+		req := clientset.CoreV1().Pods(namespace).GetLogs(podName, &corev1.PodLogOptions{Container: container.Name, Previous: true})
 
 		podLogs, err := req.Stream()
 		if err != nil {
 			log.Errorln("failed to get pods:", err)
 			continue
 		}
-
 		buf := new(bytes.Buffer)
 		_, err = io.Copy(buf, podLogs)
 		if err != nil {
@@ -86,6 +84,7 @@ func checkPod(pod *corev1.Pod) {
 			continue
 		}
 		logs := buf.String()
+
 		containerInfo.Reason = container.LastTerminationState.Terminated.Reason
 
 		sendESLogs(&containerInfo, container.RestartCount, &logs, &lastTerminationState)

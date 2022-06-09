@@ -34,12 +34,12 @@ func GetAWSChainCredentialsV1(svc *sts.STS, sess *session.Session) *credentials.
 		},
 		&credentials.SharedCredentialsProvider{},
 	}
+
 	if irsa {
 		chain = append(chain, stscreds.NewWebIdentityRoleProvider(svc, roleARN, "", tokenPath))
 	}
 
 	creds := credentials.NewChainCredentials(chain)
-
 	creds.Get() //IMPORTANT DO NOT remove otherwise throws error: RequestCanceled: request context canceled
 	//caused by: context deadline exceeded: no Elasticsearch node available
 

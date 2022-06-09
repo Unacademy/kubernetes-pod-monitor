@@ -20,7 +20,6 @@ func newSqlClient() *gorm.DB {
 	if err != nil {
 		panic(err)
 	}
-	// See "Important settings" section.
 	sqlClient.DB().SetConnMaxLifetime(time.Duration(viper.GetInt64("sql.connection_lifetime")) * time.Second)
 	sqlClient.DB().SetMaxOpenConns(80)
 	sqlClient.DB().SetMaxIdleConns(20)

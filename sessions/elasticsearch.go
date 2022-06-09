@@ -24,7 +24,6 @@ func NewElasticSearchLocalClient(esURL string) (*elastic.Client, error) {
 }
 
 func NewElasticSearchAwsClient(esURL string, awsRegion string) (*elastic.Client, error) {
-
 	sess := session.Must(session.NewSession(aws.NewConfig().WithRegion(awsRegion)))
 	svc := sts.New(sess)
 	creds := GetAWSChainCredentialsV1(svc, sess)
@@ -54,6 +53,7 @@ func InitElasticsearchClient() {
 	url := fmt.Sprintf("%s:%s", viper.GetString("elasticsearch.url"),
 		viper.GetString("elasticsearch.port"))
 	env := viper.GetString("DEPLOY_ENV")
+
 	if env == "local" {
 		client, err := NewElasticSearchLocalClient(url)
 		if err != nil {
