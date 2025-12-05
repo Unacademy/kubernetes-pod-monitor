@@ -20,7 +20,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.11 // indirect
 	github.com/olivere/elastic v6.2.23+incompatible
 	github.com/sha1sum/aws_signing_client v0.0.0-20200229211254-f7815c59d5c1
-	github.com/sirupsen/logrus v1.2.0
+	github.com/sirupsen/logrus v1.8.3
 	github.com/spf13/viper v1.6.1
 	github.com/toorop/gin-logrus v0.0.0-20190701131413-6c374ad36b67
 	k8s.io/api v0.0.0-20190918155943-95b840bb6a1f
